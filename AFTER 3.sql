@@ -1,3 +1,37 @@
+/* 1)  You are required to create tables for supplier,customer,category,product,supplier_pricing,orders,rating to store the data for the E-commerce with the schema definition given below. */
+Create database Ecommerce;
+create table Category (CAT_ID int primary key auto_increment, CAT_NAME varchar(20));
+create table Customer (CUS_ID int primary key auto_increment, CUS_NAME varchar(20), CUS_PHONE varchar(10), CUS_CITY varchar(30), CUS_GENDER varchar(1));
+create table Supplier (SUPP_ID int primary key auto_increment, SUPP_NAME varchar(50), SUPP_CITY varchar(50), SUPP_PHONE varchar(50));
+create table Product (PRO_ID int primary key auto_increment, PRO_NAME varchar(20), PRO_DESC varchar(60), CAT_ID int , foreign key(CAT_ID) REFERENCES Category(CAT_ID));
+create table Supplier_Pricing (PRICING_ID int primary key auto_increment, PRO_ID int, SUPP_ID int, SUPP_PRICE int,foreign key(PRO_ID) references Product (PRO_ID), foreign key (SUPP_ID) references Supplier(SUPP_ID));
+create table Orders (ORD_ID int primary key auto_increment, ORD_AMOUNT int, ORD_DATE date, CUS_ID int, PRICING_ID int, foreign key(CUS_ID) REFERENCES Customer(CUS_ID), foreign key(PRICING_ID) references Supplier_Pricing(PRICING_ID));
+create table Rating (RAT_ID int primary key auto_increment, ORD_ID int, RAT_RATSTARS int, foreign key(ORD_ID) references Orders (ORD_ID));
+SELECT * FROM `e-commerce`.orders;
+ALTER TABLE `e-commerce`.`supplier_pricing` 
+CHANGE COLUMN `SUPP_PRICE` `SUPP_PRICE` INT NULL DEFAULT 0;
+ALTER TABLE `e-commerce`.`supplier` 
+CHANGE COLUMN `SUPP_NAME` `SUPP_NAME` VARCHAR(50) NOT NULL ,
+CHANGE COLUMN `SUPP_CITY` `SUPP_CITY` VARCHAR(50) NOT NULL ,
+CHANGE COLUMN `SUPP_PHONE` `SUPP_PHONE` VARCHAR(50) NOT NULL;
+ALTER TABLE `e-commerce`.`rating` 
+CHANGE COLUMN `RAT_RATSTARS` `RAT_RATSTARS` INT NOT NULL;
+ALTER TABLE `e-commerce`.`product` 
+CHANGE COLUMN `PRO_NAME` `PRO_NAME` VARCHAR(20) NOT NULL DEFAULT 'dummy';
+ALTER TABLE `e-commerce`.`orders` 
+CHANGE COLUMN `ORD_AMOUNT` `ORD_AMOUNT` INT NOT NULL ,
+CHANGE COLUMN `ORD_DATE` `ORD_DATE` DATE NOT NULL;
+ALTER TABLE `e-commerce`.`customer` 
+CHANGE COLUMN `CUS_NAME` `CUS_NAME` VARCHAR(20) NOT NULL ,
+CHANGE COLUMN `CUS_PHONE` `CUS_PHONE` VARCHAR(10) NOT NULL ,
+CHANGE COLUMN `CUS_CITY` `CUS_CITY` VARCHAR(30) NOT NULL ,
+CHANGE COLUMN `CUS_GENDER` `CUS_GENDER` CHAR(1) NULL;
+ALTER TABLE `e-commerce`.`category` 
+CHANGE COLUMN `CAT_NAME` `CAT_NAME` VARCHAR(20) NOT NULL;
+ALTER TABLE `e-commerce`.`category` 
+CHANGE COLUMN `CAT_ID` `CAT_ID` INT NULL AUTO_INCREMENT ,
+CHANGE COLUMN `CAT_NAME` `CAT_NAME` VARCHAR(20) NOT NULL;
+
 /* 2) 	Insert the following data in the table created above */
 
 /* SUPPLIER TABLE */
@@ -51,33 +85,35 @@ INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`,
 INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('104', '1500' , '2022-10-05', '1', '1');
 INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('105', '3000' , '2022-08-16', '4', '3');
 INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('106', '1450' , '2022-08-18', '1', '9');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('107', '789', '2022-09-01', '3', '7');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('108', '780', '2022-09-07', '5', '6');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('109', '3000', '2022-09-10', '5', '3');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('110', '2500', '2022-09-10', '2', '4');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('111', '1000', '2022-09-15', '4', '5');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('112', '789', '2022-09-16', '4', '7');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('113', '31000', '2022-09-16', '1', '8');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('114', '1000', '2022-09-16', '3', '5');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('115', '3000', '2022-09-16', '5', '3');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('116', '99', '2022-09-17', '2', '14');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('106', '1450', '2022-08-18', '1', '9');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('107', '789', '2022-09-01', '3', '7');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('108', '780', '2022-09-07', '5', '6');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('109', '3000', '2022-09-10', '5', '3');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('110', '2500', '2022-09-10', '2', '4');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('111', '1000', '2022-09-15', '4', '5');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('112', '789', '2022-09-16', '4', '7');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('113', '31000', '2022-09-16', '1', '8');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('114', '1000', '2022-09-16', '3', '5');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('115', '3000', '2022-09-16', '5', '3');
-INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('116', '99', '2022-09-17', '2', '14');
+INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('107', '789', '2021-09-01', '3', '7');
+INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('108', '780', '2021-09-07', '5', '6');
+INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('109', '3000', '2021-09-10', '5', '3');
+INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('110', '2500', '2021-09-10', '2', '4');
+INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('111', '1000', '2021-09-15', '4', '5');
+INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('112', '789', '2021-09-16', '4', '7');
+INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('113', '31000', '2021-09-16', '1', '8');
+INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('114', '1000', '2021-09-16', '3', '5');
+INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('115', '3000', '2021-09-16', '5', '3');
+INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('116', '99', '2021-09-17', '2', '14');
+INSERT INTO `e-commerce`.`orders` (`ORD_ID`, `ORD_AMOUNT`, `ORD_DATE`, `CUS_ID`, `PRICING_ID`) VALUES ('106', '1450', '2021-08-18', '1', '9');
 
 /* RATING TABLE */
-
-
-
-
+INSERT INTO `e-commerce`.`rating` (`RAT_ID`, `ORD_ID`, `RAT_RATSTARS`) VALUES ('1', '101', '4');
+INSERT INTO `e-commerce`.`rating` (`RAT_ID`, `ORD_ID`, `RAT_RATSTARS`) VALUES ('2', '102', '2');
+INSERT INTO `e-commerce`.`rating` (`RAT_ID`, `ORD_ID`, `RAT_RATSTARS`) VALUES ('3', '103', '1');
+INSERT INTO `e-commerce`.`rating` (`RAT_ID`, `ORD_ID`, `RAT_RATSTARS`) VALUES ('4', '104', '2');
+INSERT INTO `e-commerce`.`rating` (`RAT_ID`, `ORD_ID`, `RAT_RATSTARS`) VALUES ('5', '105', '4');
+INSERT INTO `e-commerce`.`rating` (`RAT_ID`, `ORD_ID`, `RAT_RATSTARS`) VALUES ('6', '106', '2');
+INSERT INTO `e-commerce`.`rating` (`RAT_ID`, `ORD_ID`, `RAT_RATSTARS`) VALUES ('7', '107', '4');
+INSERT INTO `e-commerce`.`rating` (`RAT_ID`, `ORD_ID`, `RAT_RATSTARS`) VALUES ('8', '108', '4');
+INSERT INTO `e-commerce`.`rating` (`RAT_ID`, `ORD_ID`, `RAT_RATSTARS`) VALUES ('9', '109', '3');
+INSERT INTO `e-commerce`.`rating` (`RAT_ID`, `ORD_ID`, `RAT_RATSTARS`) VALUES ('10', '110', '5');
+INSERT INTO `e-commerce`.`rating` (`RAT_ID`, `ORD_ID`, `RAT_RATSTARS`) VALUES ('11', '111', '5');
+INSERT INTO `e-commerce`.`rating` (`RAT_ID`, `ORD_ID`, `RAT_RATSTARS`) VALUES ('12', '112', '3');
+INSERT INTO `e-commerce`.`rating` (`RAT_ID`, `ORD_ID`, `RAT_RATSTARS`) VALUES ('13', '113', '4');
+INSERT INTO `e-commerce`.`rating` (`RAT_ID`, `ORD_ID`, `RAT_RATSTARS`) VALUES ('14', '114', '2');
+INSERT INTO `e-commerce`.`rating` (`RAT_ID`, `ORD_ID`, `RAT_RATSTARS`) VALUES ('15', '115', '1');
+INSERT INTO `e-commerce`.`rating` (`RAT_ID`, `ORD_ID`, `RAT_RATSTARS`) VALUES ('16', '116', '1');
 
 
 
@@ -172,3 +208,29 @@ WHERE
     customer.CUS_NAME LIKE 'A%'
         OR customer.CUS_NAME LIKE '%A';
 
+/* 9) 	Create a stored procedure to display supplier id, name, rating and Type_of_Service. For Type_of_Service, If rating =5, print “Excellent Service”,If rating >4 print “Good Service”, If rating >2 print “Average Service” else print “Poor Service”. */
+
+select report.SUPP_ID,report.SUPP_NAME,report.Average,
+CASE
+WHEN report.Average =5 THEN 'Excellent Service'
+WHEN report.Average >4 THEN 'Good Service'
+WHEN report.Average >2 THEN 'Average Service'
+ELSE 'Poor Service'
+END AS Type_of_Service from
+(select final.SUPP_ID, supplier.SUPP_NAME, final.Average from
+(select test2.SUPP_ID, avg(test2.rat_ratstars) as Average from
+(select supplier_pricing.SUPP_ID, test.ORD_ID, test.RAT_RATSTARS from 
+supplier_pricing inner join
+(select `orders`.PRICING_ID, rating.ORD_ID, rating.RAT_RATSTARS from 
+`orders` 
+inner join 
+rating 
+on rating.`ORD_ID` = `orders`.ORD_ID ) 
+as test
+on test.PRICING_ID = supplier_pricing.PRICING_ID)
+as test2 group by supplier_pricing.SUPP_ID)
+as final 
+inner join 
+supplier 
+where final.SUPP_ID = supplier.SUPP_ID) as report;
+ /* end */
